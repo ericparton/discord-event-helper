@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.jib)
+    alias(libs.plugins.lombok)
+}
+
+group = 'com.djungelorm'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    annotationProcessor platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+    annotationProcessor libs.spring.boot.configuration.processor
+
+    implementation platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+}
+
+tasks.build.dependsOn tasks.jibDockerBuild
+
+jib {
+    container {
+        mainClass = 'com.djungelorm.discord.bot.DiscordEventHelperBot'
+    }
+    to {
+        image = project.properties.jibToImageName ?: project.name
+        tags = [ project.properties.jibToImageTag ?: 'latest' ]
+    }
+    from {
+        image = 'bellsoft/liberica-openjdk-debian:' + libs.versions.java.get()
+    }
+}
+
+dependencies {
+    implementation libs.spring.boot.starter
+    implementation libs.spring.boot.starter.validation
+
+    implementation libs.discord.api.client
+}

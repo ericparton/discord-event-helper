@@ -1,0 +1,21 @@
+[versions]
+
+spring-boot = '4.0.5'
+
+java = '25.0.2-12'
+
+[plugins]
+
+lombok = { id = 'io.freefair.lombok', version = '8.4'}
+
+spring-boot = { id = 'org.springframework.boot', version.ref = 'spring-boot' }
+
+jib = { id = 'com.google.cloud.tools.jib', version = '3.4.5' }
+
+[libraries]
+
+discord-api-client = { module = 'net.dv8tion:JDA', version = '6.4.1' }
+
+spring-boot-configuration-processor = { module = 'org.springframework.boot:spring-boot-configuration-processor' }
+spring-boot-starter = { module = 'org.springframework.boot:spring-boot-starter' }
+spring-boot-starter-validation = { module = 'org.springframework.boot:spring-boot-starter-validation' }
